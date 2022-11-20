@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: dh-test
+  profiles:
+      active: dev
+server:
+  port: 8866
+
+
