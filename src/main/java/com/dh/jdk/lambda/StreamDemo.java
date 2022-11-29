@@ -2,9 +2,7 @@ package com.dh.jdk.lambda;
 
 import com.dh.jdk.entity.User;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -123,12 +121,22 @@ public class StreamDemo {
     }
 
     /**
-     * peek
-     * @param userList
+     * concat
      * @return
      */
-    public static void peek(List<User> userList) {
-        Stream.of("one", "two", "three","four").filter(e -> e.length() > 3)
+    public static void concat() {
+        Stream<Integer> stream1 = Stream.of(1,5,8,100,56);
+        Stream<Integer> stream2 = Stream.of(10,50,80,1000,506);
+        Stream.concat(stream1,stream2).forEach(System.out::println);
+    }
+
+    /**
+     * peek
+     * @return
+     */
+    public static void peek() {
+        Stream.of("one", "two", "three","four")
+                .filter(e -> e.length() > 3)
                 .peek(e -> System.out.println("Filtered value: " + e))
                 .map(String::toUpperCase)
                 .peek(e -> System.out.println("Mapped value: " + e))
@@ -198,6 +206,134 @@ public class StreamDemo {
         System.out.println(total);
     }
 
+    /**
+     * allMatch
+     */
+    public static void allMatch() {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        boolean result = list.stream().allMatch(item -> item.equals(1));
+        System.out.println(result);
+    }
+
+    /**
+     * anyMatch
+     */
+    public static void anyMatch() {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        boolean result = list.stream().anyMatch(item -> item.equals(1));
+        System.out.println(result);
+    }
+
+    /**
+     * noneMatch
+     */
+    public static void noneMatch() {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        boolean result = list.stream().noneMatch(item -> item.equals(1));
+        System.out.println(result);
+    }
+
+    /**
+     * findFirst
+     */
+    public static void findFirst() {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        Optional<Integer> optional = list.stream()
+                .filter(item -> item > 2)
+                .findFirst();
+        System.out.println(optional.get());
+    }
+
+    /**
+     * findAny
+     */
+    public static void findAny() {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Optional<Integer> optional = list.parallelStream()
+                .filter(item -> item > 2)
+                .findAny();
+        System.out.println(optional.get());
+    }
+
+    /**
+     * 收集到集合中
+     */
+    public static void collectToList(List<User> list) {
+        List<Integer> lists = list.stream()
+                .map(User::getAge)
+                .collect(Collectors.toList());
+
+        Set<Integer> sets = list.stream()
+                .map(User::getAge)
+                .collect(Collectors.toSet());
+
+        List<Integer> lists2 = list.stream()
+                .map(User::getAge)
+                .collect(Collectors.toCollection(LinkedList::new));
+
+        Map<String, Double> map = list.stream()
+                .collect(Collectors.toMap(User::getName, User::getSalary));
+    }
+
+    /**
+     * groupingBy
+     */
+    public static void groupingBy(List<User> list) {
+        //分组
+        Map<String, List<User>> genderMap = list.stream()
+                .collect(Collectors.groupingBy(User::getGender));
+        genderMap.forEach((k, v) -> System.out.println(k + "\n" + v));
+        System.out.println("-----------------------------------------");
+        //多级分组
+        Map<String, Map<String, List<User>>> userMap = list.stream()
+                .collect(Collectors.groupingBy(User::getGender,
+                        Collectors.groupingBy(user -> user.getAge() > 18 ? "成年" : "未成年")));
+        userMap.forEach((k, v) -> System.out.println(k + "\n" + v));
+    }
+
+    /**
+     * partitioningBy
+     */
+    public static void partitioningBy(List<User> list) {
+        Map<Boolean, List<User>> userMap = list.stream()
+                .collect(Collectors.partitioningBy(user -> user.getAge() > 18));
+        userMap.forEach((k, v) -> System.out.println(k + "\n" + v));
+    }
+
+    /**
+     * 对流中的数据做聚合计
+     */
+    public static void collectAggregate(List<User> list) {
+        //总数
+        Long counting = list.stream().collect(Collectors.counting());
+        //求和
+        list.stream().collect(Collectors.summarizingInt(User::getAge));
+
+        list.stream().collect(Collectors.reducing(0,User::getAge,Integer::sum));
+
+        List<Integer> list1 = Arrays.asList(1, 2, 3, 4, 5);
+        list1.stream().reduce(0, (result, item) -> result + item);
+        list1.stream().collect(Collectors.reducing(0, (result, item) -> result + item));
+    }
+
+    /**
+     * joining
+     */
+    public static void joining(List<User> list) {
+        String name1 = list.stream()
+                .map(User::getName)
+                .collect(Collectors.joining());
+        System.out.println(name1);
+        String name2 = list.stream()
+                .map(User::getName)
+                .collect(Collectors.joining(","));
+        System.out.println(name2);
+        String name3 = list.stream()
+                .map(User::getName)
+                .collect(Collectors.joining(",","^","$"));
+        System.out.println(name3);
+    }
+
 
 
 
@@ -205,6 +341,15 @@ public class StreamDemo {
         System.out.println(sorted(LambdaDemo.defaultUserList));
         System.out.println(parallel(5));
         flatMap();
+        allMatch();
+        anyMatch();
+        noneMatch();
+        findFirst();
+        findAny();
+        concat();
+        joining(LambdaDemo.defaultUserList);
+        groupingBy(LambdaDemo.defaultUserList);
+        partitioningBy(LambdaDemo.defaultUserList);
     }
 
 

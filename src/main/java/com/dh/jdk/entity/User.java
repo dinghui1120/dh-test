@@ -22,6 +22,11 @@ public class User {
     private String name;
 
     /**
+     * 性别
+     */
+    private String gender;
+
+    /**
      * 年龄
      */
     private Integer age;

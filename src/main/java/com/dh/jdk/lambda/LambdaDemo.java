@@ -14,14 +14,14 @@ import java.util.List;
 public class LambdaDemo {
 
     public static List<User> defaultUserList = Arrays.asList(
-            new User("小明", 16, 100.00),
-            new User("小海", 20, 600.00),
-            new User("小陆", 22, 700.00),
-            new User("小空", 24, 800.00),
-            new User("小地", 26, 100.00),
-            new User("小张", 17, 200.00),
-            new User("小兰", 18, 300.00),
-            new User("小宇", 28, 2000.00)
+            new User("小明" ,"男",16, 100.00),
+            new User("小海", "男",20, 600.00),
+            new User("小陆", "男",22, 700.00),
+            new User("小空", "男",24, 800.00),
+            new User("小地", "女",26, 100.00),
+            new User("小张", "女",17, 200.00),
+            new User("小兰", "女",18, 300.00),
+            new User("小宇", "女",28, 2000.00)
     );
 
     /**
