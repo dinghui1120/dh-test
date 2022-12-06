@@ -335,7 +335,22 @@ public class StreamDemo {
     }
 
     /**
-     *
+     * collectingAndThen
+     */
+    public static void collectingAndThen(List<User> list) {
+        //统计Map中的元素个数
+        Integer collect = list.stream().collect(Collectors.collectingAndThen(Collectors.groupingBy(User::getGender), Map::size));
+        System.out.println(collect);
+        //统计的Map中的每个Value的数量
+        Map<String, Long> collect1 = list.stream().collect(Collectors.groupingBy(User::getGender, Collectors.counting()));
+        System.out.println(collect1);
+    }
+
+    /**
+     * 1、Stream只能操作一次
+     * 2、Stream不调用终结方法，中间的操作不会执行
+     * 3、collectors.tomap key不能重复 ,key可以为null,但 value不能为null
+     * 4、当list集合里某个元素的属性为空，并且你使用Collectors.groupingBy()方法对这个属性进行分组，这时系统会报错
      */
     public static void parallelStream() {
 
@@ -357,6 +372,7 @@ public class StreamDemo {
         joining(LambdaDemo.defaultUserList);
         groupingBy(LambdaDemo.defaultUserList);
         partitioningBy(LambdaDemo.defaultUserList);
+        collectingAndThen(LambdaDemo.defaultUserList);
     }
 
 
