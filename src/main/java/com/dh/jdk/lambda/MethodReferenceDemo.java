@@ -2,7 +2,10 @@ package com.dh.jdk.lambda;
 
 import com.dh.jdk.entity.User;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -32,6 +35,10 @@ public class MethodReferenceDemo {
         Function<User, String> method = User::getName;
         String name = method.apply(LambdaDemo.defaultUserList.get(0));
         System.out.println(name);
+
+        List<String> cities = Arrays.asList("a","b","c","d");
+        Collections.sort(cities, (o1, o2) -> o1.compareToIgnoreCase(o2));
+        Collections.sort(cities, String::compareToIgnoreCase);
     }
 
     /**
