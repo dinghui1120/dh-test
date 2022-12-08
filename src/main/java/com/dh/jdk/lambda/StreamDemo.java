@@ -154,6 +154,16 @@ public class StreamDemo {
     }
 
     /**
+     * generate
+     * @param n
+     */
+    public static void generate(long n) {
+        Stream.generate(Math::random)
+                .limit(5)
+                .forEach(System.out::println);
+    }
+
+    /**
      * parallel
      * 给定正整数n，计算 1 + 2 + … n的和
      * @param n
