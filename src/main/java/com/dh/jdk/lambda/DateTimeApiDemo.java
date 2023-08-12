@@ -1,5 +1,6 @@
 package com.dh.jdk.lambda;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjuster;
 
@@ -19,6 +20,21 @@ public class DateTimeApiDemo {
         };
         LocalDateTime newDateTime = now.with(adjuster);
         System.out.println("下个月第一天:"+newDateTime);
+    }
+
+    public static void test() {
+        //获取当前日期
+        LocalDate now = LocalDate.now();
+        LocalDate date = LocalDate.of(2008, 8, 8);
+        System.out.println("年:" + date.getYear());
+        System.out.println("月(英文):" + date.getMonth());
+        System.out.println("月(数字):" + date.getMonthValue());
+        System.out.println("日:" + date.getDayOfMonth());
+        System.out.println("是否是闰年:" + date.isLeapYear());
+    }
+
+    public static void main(String[] args) {
+        test();
     }
 
 }
