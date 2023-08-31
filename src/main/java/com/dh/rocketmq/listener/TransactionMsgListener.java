@@ -26,7 +26,7 @@ public class TransactionMsgListener implements RocketMQLocalTransactionListener 
     public RocketMQLocalTransactionState checkLocalTransaction(Message msg) {
         System.out.println("检查本地事务,msg:" + msg);
         System.out.println("检查本地事务,当前时间:" + DateUtil.formatDateTime(new Date()));
-        return RocketMQLocalTransactionState.UNKNOWN;
+        return RocketMQLocalTransactionState.COMMIT;
     }
 
 }
