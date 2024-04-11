@@ -1,0 +1,7 @@
+com.dh.spi.ProgrammingLanguage=\
+com.dh.spi.JavaImpl,\
+com.dh.spi.PythonImpl
+
+# Initializers
+org.springframework.context.ApplicationContextInitializer=\
+com.dh.spi.spring.MyCustomInitializer
